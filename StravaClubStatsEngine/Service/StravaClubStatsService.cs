@@ -23,7 +23,16 @@ namespace StravaClubStatsEngine.Service
 
             for (int i = 0; i < _stravaClubStatsEngineInput.NumberOfPages; i++)
             {
-                var stravaClubActivitiesFromAPI = await GetStravaClubActivitiesFromAPIAsync(i + 1);
+                List<StravaClubActivities> stravaClubActivitiesFromAPI = null;
+
+                try
+                {
+                    stravaClubActivitiesFromAPI = await GetStravaClubActivitiesFromAPIAsync(i + 1);
+                }
+                catch(Exception)
+                {
+                    return null;
+                }
 
                 if ((stravaClubActivitiesFromAPI?.Count ?? 0) == 0)
                 {
