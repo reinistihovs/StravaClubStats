@@ -1,4 +1,4 @@
-﻿namespace StravaClubStatsEngine.Models
+﻿namespace StravaClubStatsShared.Models
 {
     public class Athlete
     {

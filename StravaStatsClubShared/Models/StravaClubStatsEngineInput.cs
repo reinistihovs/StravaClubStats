@@ -1,4 +1,4 @@
-﻿namespace StravaStatsClubShared.Models
+﻿namespace StravaClubStatsShared.Models
 {
     public class StravaClubStatsEngineInput
     {

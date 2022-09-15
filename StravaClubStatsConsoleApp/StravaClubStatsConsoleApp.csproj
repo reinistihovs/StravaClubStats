@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StravaClubStatsEngine\StravaClubStatsEngine.csproj" />
-    <ProjectReference Include="..\StravaStatsClubShared\StravaStatsClubShared.csproj" />
+    <ProjectReference Include="..\StravaStatsClubShared\StravaClubStatsShared.csproj" />
   </ItemGroup>
 
 </Project>

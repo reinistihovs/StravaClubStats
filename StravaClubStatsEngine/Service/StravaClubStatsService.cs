@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
-using StravaClubStatsEngine.Models;
-using StravaClubStatsEngine.Models.FromAPI;
-using StravaClubStatsEngine.Service.API.Interfaces;
+using StravaClubStatsShared.Models.FromAPI;
+using StravaClubStatsEngine.Service.API.Interface;
 using StravaClubStatsEngine.Service.Interface;
-using StravaStatsClubShared.Models;
+using StravaClubStatsShared.Models;
 
 namespace StravaClubStatsEngine.Service
 {
@@ -47,12 +46,12 @@ namespace StravaClubStatsEngine.Service
                                 .Select(x =>
                                             new Activity()
                                             {
-                                                Athlete = new StravaClubStatsEngine.Models.Athlete()
-                                                {
-                                                    FirstName = x.athlete.firstname,
-                                                    LastName = x.athlete.lastname,
-                                                },
+                                                FirstName = x.athlete.firstname,
+                                                LastName = x.athlete.lastname,
                                                 DistanceInKilometers = ((decimal)x.distance) / 1000.00M,
+                                                MovingTimeInHours = ((decimal)x.moving_time) / 60.00M / 60.00M,
+                                                ElapsedTimeInHours = ((decimal)x.elapsed_time) / 60.00M / 60.00M,
+                                                TotalElevationGainInKilometers = ((decimal)x.total_elevation_gain) / 1000.00M,
                                             })
                                     .ToList();
         }
@@ -63,17 +62,17 @@ namespace StravaClubStatsEngine.Service
                         .GroupBy(x =>
                                     new
                                     {
-                                        x.Athlete.FirstName,
-                                        x.Athlete.LastName
+                                        x.FirstName,
+                                        x.LastName
                                     })
                         .Select(x => new ActvitiesSummary()
                         {
-                            Athlete = new StravaClubStatsEngine.Models.Athlete()
-                            {
-                                FirstName = x.Key.FirstName,
-                                LastName = x.Key.LastName
-                            },
+                            FirstName = x.Key.FirstName,
+                            LastName = x.Key.LastName,
                             TotalDistanceInKilometers = x.Sum(x => x.DistanceInKilometers),
+                            TotalMovingTimeInHours = x.Sum(x => x.MovingTimeInHours),
+                            TotalElapsedTimeInHours = x.Sum(x => x.ElapsedTimeInHours),
+                            TotalElevationGainInKilometers = x.Sum(x => x.TotalElevationGainInKilometers),
                         })
                         .ToList();
         }

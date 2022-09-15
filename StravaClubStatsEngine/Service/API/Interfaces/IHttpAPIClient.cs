@@ -1,4 +1,4 @@
-﻿namespace StravaClubStatsEngine.Service.API.Interfaces
+﻿namespace StravaClubStatsEngine.Service.API.Interface
 {
     public interface IHttpAPIClient
     {
