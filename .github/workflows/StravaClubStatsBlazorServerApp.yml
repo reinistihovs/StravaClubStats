@@ -2,11 +2,11 @@ name: Build and deploy .NET Core app to Windows WebApp TeamLadzMerrydownStravaBl
 on:
   push:
     branches:
-    - CreateBlazorServerFrontEnd
+    - master
 env:
   AZURE_WEBAPP_NAME: TeamLadzMerrydownStravaBlazorApp
   AZURE_WEBAPP_PACKAGE_PATH: StravaClubStatsBlazorServerApp/publish
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.TeamLadzMerrydownStravaBlazorApp_69ff }}
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.TeamLadzMerrydownStravaBlazorApp_39aa }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: StravaClubStatsBlazorServerApp
