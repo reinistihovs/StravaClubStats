@@ -1,5 +1,5 @@
-﻿using StravaClubStatsEngine.Service.API.Interfaces;
-using StravaStatsClubShared.Models;
+﻿using StravaClubStatsEngine.Service.API.Interface;
+using StravaClubStatsShared.Models;
 using System.Net.Http.Headers;
 
 namespace StravaClubStatsEngine.Service.API

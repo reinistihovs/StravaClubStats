@@ -1,8 +1,12 @@
-﻿namespace StravaClubStatsEngine.Models
+﻿namespace StravaClubStatsShared.Models
 {
     public class Activity
     {
-        public Athlete Athlete { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public decimal DistanceInKilometers { get; set; }
+        public decimal MovingTimeInHours { get; set; }
+        public decimal ElapsedTimeInHours { get; set; }
+        public decimal TotalElevationGainInKilometers { get; set; }
     }
 }

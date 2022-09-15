@@ -1,4 +1,4 @@
-﻿namespace StravaClubStatsEngine.Models.FromAPI
+﻿namespace StravaClubStatsShared.Models.FromAPI
 {
     public class StravaClubActivities
     {

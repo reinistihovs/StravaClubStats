@@ -1,4 +1,4 @@
-﻿using StravaClubStatsEngine.Models;
+﻿using StravaClubStatsShared.Models;
 
 namespace StravaClubStatsEngine.Service.Interface
 {
