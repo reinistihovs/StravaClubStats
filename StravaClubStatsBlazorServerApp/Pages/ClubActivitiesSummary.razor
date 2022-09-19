@@ -11,9 +11,17 @@
     }
 </style>
 
-@if (clubActivitiesSummaries == null)
+<h1>Club Activities Summary</h1>
+
+@if (clubActivitiesSummaries == null  && !isInvalidClubActivities)
 {
     <p><em>Loading...</em></p>
+}
+else if(isInvalidClubActivities)
+{
+    <div style="color:red; padding-bottom: 20px;">
+        <p><em>@errorMessage</em></p>
+    </div>
 }
 else
 {
