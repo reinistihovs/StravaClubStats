@@ -6,30 +6,42 @@ namespace StravaClubStatsBlazorServerApp.Pages
     {
         private List<ActvitiesSummary> clubActivitiesSummaries = null;
 
-        private bool IsSortedAscending;
+        private bool isSortedAscending;
 
-        private string CurrentSortColumn;
+        private string currentSortColumn;
+
+        private bool isInvalidClubActivities = false;
+
+        private string errorMessage { get; set; }
 
         private string TidyStravaMetric(decimal stravaMetric) => stravaMetric.ToString("0.##");
 
         protected override async Task OnInitializedAsync()
         {
-            clubActivitiesSummaries = await StravaClubStatsService.GetClubActivitiesSummary();
+            try
+            {
+                clubActivitiesSummaries = await StravaClubStatsService.GetClubActivitiesSummary();
+            }
+            catch (Exception ex)
+            {
+                isInvalidClubActivities = true;
+                errorMessage = $"Could not retrieve the club activities";
+            }
         }
 
         private string GetSortStyle(string columnName)
         {
-            if (CurrentSortColumn != columnName)
+            if (currentSortColumn != columnName)
             {
                 return string.Empty;
             }
 
-            return IsSortedAscending ? "▲" : "▼";
+            return isSortedAscending ? "▲" : "▼";
         }
 
         private void SortTable(string columnName)
         {
-            if (columnName != CurrentSortColumn)
+            if (columnName != currentSortColumn)
             {
                 clubActivitiesSummaries = clubActivitiesSummaries
                                             .OrderBy(x =>
@@ -38,13 +50,13 @@ namespace StravaClubStatsBlazorServerApp.Pages
                                                 .GetValue(x, null))
                                             .ToList();
 
-                CurrentSortColumn = columnName;
-                IsSortedAscending = true;
+                currentSortColumn = columnName;
+                isSortedAscending = true;
 
             }
             else
             {
-                if (IsSortedAscending)
+                if (isSortedAscending)
                 {
                     clubActivitiesSummaries = clubActivitiesSummaries
                                                         .OrderByDescending(x =>
@@ -63,7 +75,7 @@ namespace StravaClubStatsBlazorServerApp.Pages
                                                 .ToList();
                 }
 
-                IsSortedAscending = !IsSortedAscending;
+                isSortedAscending = !isSortedAscending;
             }
         }
     }

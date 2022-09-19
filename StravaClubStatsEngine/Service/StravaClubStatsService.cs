@@ -19,34 +19,11 @@ namespace StravaClubStatsEngine.Service
 
         public async Task<List<ActvitiesSummary>> GetClubActivitiesSummary()
         {
-            var clubActvities = new List<Activity>();
+            var stravaClubActivitiesFromAPI = await GetStravaClubActivitiesFromAPIAsync();
 
-            for (int i = 0; i < _stravaClubStatsEngineInput.NumberOfPages; i++)
-            {
-                List<StravaClubActivities> stravaClubActivitiesFromAPI = null;
+            var clubActvities = ConvertFromClubActvitiesFromAPIToClubActvities(stravaClubActivitiesFromAPI);
 
-                try
-                {
-                    stravaClubActivitiesFromAPI = await GetStravaClubActivitiesFromAPIAsync(i + 1);
-                }
-                catch(Exception)
-                {
-                    return null;
-                }
-
-                if ((stravaClubActivitiesFromAPI?.Count ?? 0) == 0)
-                {
-                    break;
-                }
-
-                var clubActvitiesPage = ConvertFromClubActvitiesFromAPIToClubActvities(stravaClubActivitiesFromAPI);
-
-                clubActvities = clubActvities.Union(clubActvitiesPage).ToList();
-            }
-
-            var clubActvitiesSummary = GetActivitiesSummary(clubActvities);
-
-            return clubActvitiesSummary;
+            return GetActivitiesSummary(clubActvities);
         }
 
         private List<Activity> ConvertFromClubActvitiesFromAPIToClubActvities(List<StravaClubActivities> stravaClubActivitiesFromAPI)
@@ -86,9 +63,9 @@ namespace StravaClubStatsEngine.Service
                         .ToList();
         }
 
-        private async Task<List<StravaClubActivities>> GetStravaClubActivitiesFromAPIAsync(int pageNumber)
+        private async Task<List<StravaClubActivities>> GetStravaClubActivitiesFromAPIAsync()
         {
-            string json = await _httpAPIClient.GetAsync($"clubs/{_stravaClubStatsEngineInput.ClubID}/activities?page={pageNumber}&per_page=200&access_token={_stravaClubStatsEngineInput.APIToken}");
+            string json = await _httpAPIClient.GetAsync($"clubs/{_stravaClubStatsEngineInput.ClubID}/activities?per_page=200&access_token={_stravaClubStatsEngineInput.APIToken}");
             return JsonConvert.DeserializeObject<List<StravaClubActivities>>(json);
         }
     }
