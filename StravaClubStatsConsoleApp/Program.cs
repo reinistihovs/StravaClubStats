@@ -9,12 +9,20 @@ var builder = new ConfigurationBuilder()
 
 var config = builder.Build();
 
+Int32.TryParse(config["ClientID"], out int clientID);
+
+Int32.TryParse(config["ClubID"], out int clubID);
+
+Int32.TryParse(config["NumberOfPages"], out int numberOfPages);
+
 var stravaClubStatsEngineInput = new StravaClubStatsEngineInput()
 {
     StravaClubAPIUrl = config["StravaClubAPIUrl"],
-    APIToken = config["APIToken"],
-    ClubID = Convert.ToInt32(config["ClubID"]),
-    NumberOfPages = Convert.ToInt32(config["NumberOfPages"]),
+    ClientID = clientID,
+    ClientSecret = config["ClientSecret"],
+    RefreshToken = config["RefreshToken"],
+    ClubID = clubID,
+    NumberOfPages = numberOfPages,
 };
 
 var httpClient = new HttpClient();
