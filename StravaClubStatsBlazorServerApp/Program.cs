@@ -10,14 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-Int32.TryParse(builder.Configuration["NumberOfPages"], out int numberOfPages);
+Int32.TryParse(builder.Configuration["ClientID"], out int clientID);
 
 Int32.TryParse(builder.Configuration["ClubID"], out int clubID);
+
+Int32.TryParse(builder.Configuration["NumberOfPages"], out int numberOfPages);
 
 var stravaClubStatsEngineInput = new StravaClubStatsEngineInput()
 {
     StravaClubAPIUrl = builder.Configuration["StravaClubAPIUrl"],
-    APIToken = builder.Configuration["APIToken"],
+    ClientID = clientID,
+    ClientSecret = builder.Configuration["ClientSecret"],
+    RefreshToken = builder.Configuration["RefreshToken"],
     ClubID = clubID,
     NumberOfPages = numberOfPages,
 };

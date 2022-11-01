@@ -22,5 +22,14 @@ namespace StravaClubStatsEngine.Service.API
         {
             return await _Client.GetStringAsync(url);
         }
+
+        public async Task<HttpResponseMessage> PostAsync(string url)
+        {
+            var response = await _Client.PostAsync(url, null);
+
+            response.EnsureSuccessStatusCode();
+
+            return response;
+        }
     }
 }

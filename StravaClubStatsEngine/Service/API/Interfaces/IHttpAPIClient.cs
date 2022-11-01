@@ -3,5 +3,6 @@
     public interface IHttpAPIClient
     {
         public Task<string> GetAsync(string url);
+        Task<HttpResponseMessage> PostAsync(string url);
     }
 }

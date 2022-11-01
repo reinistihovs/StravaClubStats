@@ -3,6 +3,7 @@ using StravaClubStatsShared.Models.FromAPI;
 using StravaClubStatsEngine.Service.API.Interface;
 using StravaClubStatsEngine.Service.Interface;
 using StravaClubStatsShared.Models;
+using System.Net.Http.Json;
 
 namespace StravaClubStatsEngine.Service
 {
@@ -19,7 +20,9 @@ namespace StravaClubStatsEngine.Service
 
         public async Task<List<ActvitiesSummary>> GetClubActivitiesSummary()
         {
-            var stravaClubActivitiesFromAPI = await GetStravaClubActivitiesFromAPIAsync();
+            var refreshAPIToken = await GetRefreshAPIToken();
+
+            var stravaClubActivitiesFromAPI = await GetStravaClubActivitiesFromAPIAsync(refreshAPIToken);
 
             var clubActvities = ConvertFromClubActvitiesFromAPIToClubActvities(stravaClubActivitiesFromAPI);
 
@@ -63,9 +66,15 @@ namespace StravaClubStatsEngine.Service
                         .ToList();
         }
 
-        private async Task<List<StravaClubActivities>> GetStravaClubActivitiesFromAPIAsync()
+        private async Task<RefreshAPIToken> GetRefreshAPIToken()
         {
-            string json = await _httpAPIClient.GetAsync($"clubs/{_stravaClubStatsEngineInput.ClubID}/activities?per_page=200&access_token={_stravaClubStatsEngineInput.APIToken}");
+            var response = await _httpAPIClient.PostAsync($"oauth/token?client_id={_stravaClubStatsEngineInput.ClientID}&client_secret={_stravaClubStatsEngineInput.ClientSecret}&grant_type=refresh_token&refresh_token={_stravaClubStatsEngineInput.RefreshToken}");
+            return await response.Content.ReadFromJsonAsync<RefreshAPIToken>();
+        }
+
+        private async Task<List<StravaClubActivities>> GetStravaClubActivitiesFromAPIAsync(RefreshAPIToken refreshAPIToken)
+        {
+            string json = await _httpAPIClient.GetAsync($"clubs/{_stravaClubStatsEngineInput.ClubID}/activities?per_page=200&access_token={refreshAPIToken.access_token}");
             return JsonConvert.DeserializeObject<List<StravaClubActivities>>(json);
         }
     }
