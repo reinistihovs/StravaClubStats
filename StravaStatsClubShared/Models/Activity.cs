@@ -2,8 +2,10 @@
 {
     public class Activity
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string AthleteFirstName { get; set; }
+        public string AthleteLastName { get; set; }
+        public string ActivityName { get; set; }
+        public string SportType { get; set; }
         public decimal DistanceInKilometers { get; set; }
         public decimal MovingTimeInHours { get; set; }
         public decimal ElapsedTimeInHours { get; set; }

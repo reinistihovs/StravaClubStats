@@ -33,7 +33,7 @@ var httpAPIClient = new HttpAPIClient(httpClient, stravaClubStatsEngineInput);
 
 var stravaClubStatsService = new StravaClubStatsService(httpAPIClient, stravaClubStatsEngineInput);
 
-var clubActivitiesSummaries = await stravaClubStatsService.GetClubActivitiesSummary();
+var clubActivitiesSummaries = await stravaClubStatsService.GetClubActivitiesSummariesAsync();
 
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");

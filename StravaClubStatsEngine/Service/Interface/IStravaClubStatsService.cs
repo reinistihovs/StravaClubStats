@@ -4,6 +4,7 @@ namespace StravaClubStatsEngine.Service.Interface
 {
     public interface IStravaClubStatsService
     {
-        Task<List<ActvitiesSummary>> GetClubActivitiesSummary();
+        Task<List<ActivitiesSummary>> GetClubActivitiesSummariesAsync();
+        Task<List<Activity>> GetClubActivitiesAsync();
     }
 }

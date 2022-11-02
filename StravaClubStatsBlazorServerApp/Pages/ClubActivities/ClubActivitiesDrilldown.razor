@@ -1,0 +1,66 @@
+﻿@page "/clubactivities/clubActivitiesdrilldown"
+
+@inject IStravaClubStatsService StravaClubStatsService;
+
+<h1>Club Activities Drilldown</h1>
+
+@if (clubActivities == null && !isInvalidClubActivities)
+{
+    <p><em>Loading...</em></p>
+}
+else if (isInvalidClubActivities)
+{
+    <ErrorMessage Error="@errorMessage" />
+}
+else
+{
+    <table style="width: 1024px; margin-top: 15px;">
+        <tr>
+            <th>
+                <span class="table-column-sort-link" onclick=@(() => SortTable("AthleteFirstName"))>First Name</span>
+                <span>@(tableSortHelper.GetSortStyle("AthleteFirstName"))</span>
+            </th>
+            <th>
+                <span class="table-column-sort-link" onclick=@(() => SortTable("AthleteLastName"))>Last Name</span>
+                <span>@(tableSortHelper.GetSortStyle("AthleteLastName"))</span>
+            </th>
+            <th>
+                <span class="table-column-sort-link" onclick=@(() => SortTable("ActivityName"))>Activity Name</span>
+                <span>@(tableSortHelper.GetSortStyle("ActivityName"))</span>
+            </th>
+            <th>
+                <span class="table-column-sort-link" onclick=@(() => SortTable("SportType"))>Sport Type</span>
+                <span>@(tableSortHelper.GetSortStyle("SportType"))</span>
+            </th>
+            <th style="text-align:center;">
+                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalDistanceInKilometers"))>Distance (KMs)</span>
+                <span>@(tableSortHelper.GetSortStyle("TotalDistanceInKilometers"))</span>
+            </th>
+            <th style="text-align:center;">
+                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalElapsedTimeInHours"))>Elapsed Time (Hours)</span>
+                <span>@(tableSortHelper.GetSortStyle("TotalElapsedTimeInHours"))</span>
+            </th>
+            <th style="text-align:center;">
+                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalMovingTimeInHours"))>Moving Time (Hours)</span>
+                <span>@(tableSortHelper.GetSortStyle("TotalMovingTimeInHours"))</span>
+            </th>
+            <th style="text-align:center;">
+                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalElevationGainInKilometers"))>Elevation Gain (KMs)</span>
+                <span>@(tableSortHelper.GetSortStyle("TotalElevationGainInKilometers"))</span>
+            </th>
+        </tr>
+        @foreach (var clubActivity in clubActivities)
+        {
+            <tr>
+                <td>@clubActivity.AthleteFirstName</td>
+                <td>@clubActivity.AthleteLastName</td>
+                <td>@clubActivity.ActivityName</td>
+                <td>@clubActivity.SportType</td>
+                <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivity.DistanceInKilometers)</td>
+                <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivity.ElapsedTimeInHours)</td>
+                <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivity.MovingTimeInHours)</td>
+                <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivity.TotalElevationGainInKilometers)</td>
+            </tr>
+        }
+    </table>
+}
