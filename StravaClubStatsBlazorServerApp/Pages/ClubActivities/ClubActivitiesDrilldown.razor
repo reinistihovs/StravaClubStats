@@ -33,15 +33,15 @@ else
                 <span>@(tableSortHelper.GetSortStyle("SportType"))</span>
             </th>
             <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalDistanceInKilometers"))>Distance (KMs)</span>
+                <span class="table-column-sort-link" onclick=@(() => SortTable("DistanceInKilometers"))>Distance (KMs)</span>
                 <span>@(tableSortHelper.GetSortStyle("TotalDistanceInKilometers"))</span>
             </th>
             <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalElapsedTimeInHours"))>Elapsed Time (Hours)</span>
+                <span class="table-column-sort-link" onclick=@(() => SortTable("ElapsedTimeInHours"))>Elapsed Time (Hours)</span>
                 <span>@(tableSortHelper.GetSortStyle("TotalElapsedTimeInHours"))</span>
             </th>
             <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalMovingTimeInHours"))>Moving Time (Hours)</span>
+                <span class="table-column-sort-link" onclick=@(() => SortTable("MovingTimeInHours"))>Moving Time (Hours)</span>
                 <span>@(tableSortHelper.GetSortStyle("TotalMovingTimeInHours"))</span>
             </th>
             <th style="text-align:center;">
