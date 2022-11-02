@@ -62,3 +62,19 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.table-column-sort-link {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+.error-message-div {
+    color: red;
+    padding-bottom: 20px;
+}
+
+.about-text {
+    margin-top: 20px;
+    font-size: 19px;
+}

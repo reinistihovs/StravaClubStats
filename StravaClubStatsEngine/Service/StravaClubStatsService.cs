@@ -18,15 +18,20 @@ namespace StravaClubStatsEngine.Service
             _stravaClubStatsEngineInput = stravaClubStatsEngineInput;
         }
 
-        public async Task<List<ActvitiesSummary>> GetClubActivitiesSummary()
+        public async Task<List<ActivitiesSummary>> GetClubActivitiesSummariesAsync()
+        {
+            var clubActvities = await GetClubActivitiesAsync();
+
+            return GetActivitiesSummary(clubActvities);
+        }
+
+        public async Task<List<Activity>> GetClubActivitiesAsync()
         {
             var refreshAPIToken = await GetRefreshAPIToken();
 
             var stravaClubActivitiesFromAPI = await GetStravaClubActivitiesFromAPIAsync(refreshAPIToken);
 
-            var clubActvities = ConvertFromClubActvitiesFromAPIToClubActvities(stravaClubActivitiesFromAPI);
-
-            return GetActivitiesSummary(clubActvities);
+            return ConvertFromClubActvitiesFromAPIToClubActvities(stravaClubActivitiesFromAPI);
         }
 
         private List<Activity> ConvertFromClubActvitiesFromAPIToClubActvities(List<StravaClubActivities> stravaClubActivitiesFromAPI)
@@ -35,8 +40,10 @@ namespace StravaClubStatsEngine.Service
                                 .Select(x =>
                                             new Activity()
                                             {
-                                                FirstName = x.athlete.firstname,
-                                                LastName = x.athlete.lastname,
+                                                AthleteFirstName = x.athlete.firstname,
+                                                AthleteLastName = x.athlete.lastname,
+                                                ActivityName = x.name,
+                                                SportType = x.sport_type,
                                                 DistanceInKilometers = ((decimal)x.distance) / 1000.00M,
                                                 MovingTimeInHours = ((decimal)x.moving_time) / 60.00M / 60.00M,
                                                 ElapsedTimeInHours = ((decimal)x.elapsed_time) / 60.00M / 60.00M,
@@ -45,23 +52,28 @@ namespace StravaClubStatsEngine.Service
                                     .ToList();
         }
 
-        private List<ActvitiesSummary> GetActivitiesSummary(List<Activity> clubActvities)
+        private List<ActivitiesSummary> GetActivitiesSummary(List<Activity> clubActvities)
         {
             return clubActvities
                         .GroupBy(x =>
                                     new
                                     {
-                                        x.FirstName,
-                                        x.LastName
+                                        x.AthleteFirstName,
+                                        x.AthleteLastName
                                     })
-                        .Select(x => new ActvitiesSummary()
+                        .Select(x => new ActivitiesSummary()
                         {
-                            FirstName = x.Key.FirstName,
-                            LastName = x.Key.LastName,
+                            AthleteFirstName = x.Key.AthleteFirstName,
+                            AthleteLastName = x.Key.AthleteLastName,
+                            TotalNumberOfRides = x.Count(),
                             TotalDistanceInKilometers = x.Sum(x => x.DistanceInKilometers),
                             TotalMovingTimeInHours = x.Sum(x => x.MovingTimeInHours),
                             TotalElapsedTimeInHours = x.Sum(x => x.ElapsedTimeInHours),
                             TotalElevationGainInKilometers = x.Sum(x => x.TotalElevationGainInKilometers),
+                            AverageDistancePerRideInKilometers = x.Sum(x => x.DistanceInKilometers) / x.Count(),
+                            AverageMovingTimeInHours = x.Sum(x => x.MovingTimeInHours) / x.Count(),
+                            AverageElapsedTimeInHours = x.Sum(x => x.ElapsedTimeInHours) / x.Count(),
+                            AverageElevationGainInKilometers = x.Sum(x => x.TotalElevationGainInKilometers) / x.Count(),
                         })
                         .ToList();
         }
