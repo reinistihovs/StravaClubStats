@@ -1,4 +1,5 @@
 ﻿using StravaClubStatsBlazorServerApp.Helpers;
+using StravaClubStatsEngine.Queries;
 using StravaClubStatsShared.Models;
 
 namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities
@@ -17,7 +18,7 @@ namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities
         {
             try
             {
-                clubActivitiesSummaries = await StravaClubStatsService.GetClubActivitiesSummariesAsync();
+                clubActivitiesSummaries = await Mediator.Send(new GetClubActivitiesSummariesQuery());
 
                 tableSortHelper = new TableSortHelper<ActivitiesSummary>(clubActivitiesSummaries);
             }
