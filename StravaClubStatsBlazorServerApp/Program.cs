@@ -1,3 +1,4 @@
+using StravaClubStatsEngine;
 using StravaClubStatsEngine.Service;
 using StravaClubStatsEngine.Service.API;
 using StravaClubStatsEngine.Service.API.Interface;
@@ -29,6 +30,8 @@ var stravaClubStatsEngineInput = new StravaClubStatsEngineInput()
 builder.Services.AddSingleton(stravaClubStatsEngineInput);
 builder.Services.AddHttpClient<IHttpAPIClient, HttpAPIClient>();
 builder.Services.AddSingleton<IStravaClubStatsService, StravaClubStatsService>();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StravaClubStatsEngineMediatREntryPoint).Assembly));
 
 var app = builder.Build();
 
