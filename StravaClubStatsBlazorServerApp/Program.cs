@@ -1,3 +1,4 @@
+using MudBlazor.Services;
 using StravaClubStatsEngine;
 using StravaClubStatsEngine.Service;
 using StravaClubStatsEngine.Service.API;
@@ -32,6 +33,8 @@ builder.Services.AddHttpClient<IHttpAPIClient, HttpAPIClient>();
 builder.Services.AddSingleton<IStravaClubStatsService, StravaClubStatsService>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StravaClubStatsEngineMediatREntryPoint).Assembly));
+
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 

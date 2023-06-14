@@ -8,13 +8,45 @@ namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities
     {
         private List<ActivitiesSummary> clubActivitiesSummaries = null;
 
-        private TableSortHelper<ActivitiesSummary> tableSortHelper;
+        public TableSortHelper<ActivitiesSummary> tableSortHelper;
 
         private bool isInvalidClubActivities = false;
 
         private string errorMessage { get; set; }
 
+        private string searchText;
+
         protected override async Task OnInitializedAsync()
+        {
+            await GetAllClubActivitiesSummaries();
+        }
+
+        private async Task SearchAsync()
+        {
+            clubActivitiesSummaries = await Mediator.Send(new GetClubActivitiesSummariesSearchQuery(searchText));
+            tableSortHelper = new TableSortHelper<ActivitiesSummary>(clubActivitiesSummaries);
+        }
+
+        private async Task ClearAsync()
+        {
+            clubActivitiesSummaries = await Mediator.Send(new GetClubActivitiesSummariesQuery());
+            tableSortHelper = new TableSortHelper<ActivitiesSummary>(clubActivitiesSummaries);
+            searchText = string.Empty;
+        }
+
+        private async Task<IEnumerable<ActivitiesSummary>> SearchForAutoCompleteAsync(string searchForAutoComplete)
+        {
+            searchText = searchForAutoComplete;
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                return await Mediator.Send(new GetClubActivitiesSummariesQuery());
+            }
+
+            return await Mediator.Send(new GetClubActivitiesSummariesSearchQuery(searchText));
+        }
+
+        private async Task GetAllClubActivitiesSummaries()
         {
             try
             {

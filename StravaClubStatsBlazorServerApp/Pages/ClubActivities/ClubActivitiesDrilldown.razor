@@ -14,6 +14,14 @@ else if (isInvalidClubActivities)
 }
 else
 {
+    <div class="row margin-bottom-20">
+        <div class="col-md-9">
+            <MudAutocomplete T="ActivitiesSummary" Label="Search" ResetValueOnEmptyText="true" SearchFunc="SearchForAutoCompleteAsync" ToStringFunc="@(activitySummary => activitySummary is null ? null : $"{activitySummary.AthleteFirstName} {activitySummary.AthleteLastName}")"></MudAutocomplete>
+            <button class="btn" type="button" @onclick="SearchAsync">Search</button>
+            <button class="btn" type="button" @onclick="ClearAsync">Clear</button>
+        </div>
+    </div>
+    
     <table style="width: 1024px; margin-top: 15px;">
         <tr>
             <th>
