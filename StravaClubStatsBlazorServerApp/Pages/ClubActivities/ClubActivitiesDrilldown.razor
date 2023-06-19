@@ -14,61 +14,23 @@ else if (isInvalidClubActivities)
 }
 else
 {
-    <div class="row margin-bottom-20">
-        <div class="col-md-9">
-            <MudAutocomplete T="ActivitiesSummary" Label="Search" ResetValueOnEmptyText="true" SearchFunc="SearchForAutoCompleteAsync" ToStringFunc="@(activitySummary => activitySummary is null ? null : $"{activitySummary.AthleteFirstName} {activitySummary.AthleteLastName}")"></MudAutocomplete>
-            <button class="btn" type="button" @onclick="SearchAsync">Search</button>
-            <button class="btn" type="button" @onclick="ClearAsync">Clear</button>
-        </div>
-    </div>
-    
-    <table style="width: 1024px; margin-top: 15px;">
-        <tr>
-            <th>
-                <span class="table-column-sort-link" onclick=@(() => SortTable("AthleteFirstName"))>First Name</span>
-                <span>@(tableSortHelper.GetSortStyle("AthleteFirstName"))</span>
-            </th>
-            <th>
-                <span class="table-column-sort-link" onclick=@(() => SortTable("AthleteLastName"))>Last Name</span>
-                <span>@(tableSortHelper.GetSortStyle("AthleteLastName"))</span>
-            </th>
-            <th>
-                <span class="table-column-sort-link" onclick=@(() => SortTable("ActivityName"))>Activity Name</span>
-                <span>@(tableSortHelper.GetSortStyle("ActivityName"))</span>
-            </th>
-            <th>
-                <span class="table-column-sort-link" onclick=@(() => SortTable("SportType"))>Sport Type</span>
-                <span>@(tableSortHelper.GetSortStyle("SportType"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("DistanceInKilometers"))>Distance (KMs)</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalDistanceInKilometers"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("ElapsedTimeInHours"))>Elapsed Time (Hours)</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalElapsedTimeInHours"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("MovingTimeInHours"))>Moving Time (Hours)</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalMovingTimeInHours"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalElevationGainInKilometers"))>Elevation Gain (KMs)</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalElevationGainInKilometers"))</span>
-            </th>
-        </tr>
-        @foreach (var clubActivity in clubActivities)
-        {
-            <tr>
-                <td>@clubActivity.AthleteFirstName</td>
-                <td>@clubActivity.AthleteLastName</td>
-                <td>@clubActivity.ActivityName</td>
-                <td>@clubActivity.SportType</td>
-                <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivity.DistanceInKilometers)</td>
-                <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivity.ElapsedTimeInHours)</td>
-                <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivity.MovingTimeInHours)</td>
-                <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivity.TotalElevationGainInKilometers)</td>
-            </tr>
-        }
-    </table>
+    <MudDataGrid T="Activity" MultiSelection="true" Items="@clubActivities" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@quickFilter"
+        Hideable="true">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Club Activities Drilldown</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchText" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.AthleteFirstName" Title="First Name" />
+            <PropertyColumn Property="x => x.AthleteLastName" Title="Last Name" />
+            <PropertyColumn Property="x => x.ActivityName" Title="Activity Name" />
+            <PropertyColumn Property="x => x.SportType" Title="Sport Type" />
+            <PropertyColumn Property="x => x.DistanceInKilometers" Title="Distance (KMs)" />
+            <PropertyColumn Property="x => x.ElapsedTimeInHours" Title="Elapsed Time (Hours)" />
+            <PropertyColumn Property="x => x.MovingTimeInHours" Title="Moving Time (Hours)" />
+            <PropertyColumn Property="x => x.TotalElevationGainInKilometers" Title="Elevation Gain (KMs)" />
+        </Columns>
+    </MudDataGrid>
 }
