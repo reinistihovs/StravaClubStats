@@ -14,68 +14,26 @@ else if(isInvalidClubActivities)
 }
 else
 {
-    <table style="width: 1024px; margin-top: 15px;">
-        <tr>
-            <th>
-                <span class="table-column-sort-link" onclick=@(() => SortTable("AthleteFirstName"))>First Name</span>
-                <span>@(tableSortHelper.GetSortStyle("AthleteFirstName"))</span>
-            </th>
-            <th>
-                <span class="table-column-sort-link" onclick=@(() => SortTable("AthleteLastName"))>Last Name</span>
-                <span>@(tableSortHelper.GetSortStyle("AthleteLastName"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalNumberOfRides"))>Total Number of Rides</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalNumberOfRides"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalDistanceInKilometers"))>Distance (KMs)</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalDistanceInKilometers"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalElapsedTimeInHours"))>Elapsed Time (Hours)</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalElapsedTimeInHours"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalMovingTimeInHours"))>Moving Time (Hours)</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalMovingTimeInHours"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("TotalElevationGainInKilometers"))>Elevation Gain (KMs)</span>
-                <span>@(tableSortHelper.GetSortStyle("TotalElevationGainInKilometers"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("AverageDistancePerRideInKilometers"))>Average Distance per Ride (KMs)</span>
-                <span>@(tableSortHelper.GetSortStyle("AverageDistancePerRideInKilometers"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("AverageElapsedTimeInHours"))>Average Elapsed Time per Ride (Hours)</span>
-                <span>@(tableSortHelper.GetSortStyle("AverageElapsedTimeInHours"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("AverageMovingTimeInHours"))>Average Moving Time per Ride (Hours)</span>
-                <span>@(tableSortHelper.GetSortStyle("AverageMovingTimeInHours"))</span>
-            </th>
-            <th style="text-align:center;">
-                <span class="table-column-sort-link" onclick=@(() => SortTable("AverageElevationGainInKilometers"))>Average Elevation Gain per Ride (KMs)</span>
-                <span>@(tableSortHelper.GetSortStyle("AverageElevationGainInKilometers"))</span>
-            </th>
-        </tr>
-    @foreach(var clubActivitiesSummary in clubActivitiesSummaries)
-    {
-        <tr>
-            <td>@clubActivitiesSummary.AthleteFirstName</td>
-            <td>@clubActivitiesSummary.AthleteLastName</td>
-            <td style="text-align:center;">@clubActivitiesSummary.TotalNumberOfRides</td>
-            <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivitiesSummary.TotalDistanceInKilometers)</td>
-            <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivitiesSummary.TotalElapsedTimeInHours)</td>
-            <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivitiesSummary.TotalMovingTimeInHours)</td>
-            <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivitiesSummary.TotalElevationGainInKilometers)</td>
-            <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivitiesSummary.AverageDistancePerRideInKilometers)</td>
-            <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivitiesSummary.AverageElapsedTimeInHours)</td>
-            <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivitiesSummary.AverageMovingTimeInHours)</td>
-            <td style="text-align:center;">@Helper.TidyStravaMetric(clubActivitiesSummary.AverageElevationGainInKilometers)</td>
-        </tr>
-    }
-    </table>
+    <MudDataGrid T="ActivitiesSummary" MultiSelection="true" Items="@clubActivitiesSummaries" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@quickFilter"
+             Hideable="true">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Club Activities Drilldown</MudText>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchText" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+        <Columns>
+            <PropertyColumn Property="x => x.AthleteFirstName" Title="First Name" />
+            <PropertyColumn Property="x => x.AthleteLastName" Title="Last Name" />
+            <PropertyColumn Property="x => x.TotalNumberOfRides" Title="Total Number of Rides" />
+            <PropertyColumn Property="x => x.TotalDistanceInKilometers" Title="Distance (KMs)" />
+            <PropertyColumn Property="x => x.TotalElapsedTimeInHours" Title="Elapsed Time (Hours)" />
+            <PropertyColumn Property="x => x.TotalMovingTimeInHours" Title="Moving Time (Hours)" />
+            <PropertyColumn Property="x => x.TotalElevationGainInKilometers" Title="Elevation Gain (KMs)" />
+            <PropertyColumn Property="x => x.AverageDistancePerRideInKilometers" Title="Average Distance per Ride (KMs)" />
+            <PropertyColumn Property="x => x.AverageElapsedTimeInHours" Title="Average Elapsed Time per Ride (Hours)" />
+            <PropertyColumn Property="x => x.AverageMovingTimeInHours" Title="Average Moving Time per Ride (Hours)" />
+            <PropertyColumn Property="x => x.AverageElevationGainInKilometers" Title="Average Elevation Gain per Ride (KMs)" />
+        </Columns>
+    </MudDataGrid>
 }
