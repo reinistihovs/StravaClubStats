@@ -16,6 +16,8 @@ namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities
         private bool filterColumn(string columnName) =>
                         columnName.Contains(searchText, StringComparison.OrdinalIgnoreCase);
 
+        private string ConvertTo2DecimalPlaces(decimal decimalValue) => decimalValue.ToString("0.##");
+
         private Func<Activity, bool> quickFilter => x =>
         {
             if (string.IsNullOrWhiteSpace(searchText))
