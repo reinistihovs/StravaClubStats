@@ -17,7 +17,6 @@ else
     <MudDataGrid T="Activity" MultiSelection="true" Items="@clubActivities" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@quickFilter"
         Hideable="true">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Club Activities Drilldown</MudText>
             <MudSpacer />
             <MudTextField @bind-Value="searchText" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
@@ -27,10 +26,10 @@ else
             <PropertyColumn Property="x => x.AthleteLastName" Title="Last Name" />
             <PropertyColumn Property="x => x.ActivityName" Title="Activity Name" />
             <PropertyColumn Property="x => x.SportType" Title="Sport Type" />
-            <PropertyColumn Property="x => x.DistanceInKilometers" Title="Distance (KMs)" />
-            <PropertyColumn Property="x => x.ElapsedTimeInHours" Title="Elapsed Time (Hours)" />
-            <PropertyColumn Property="x => x.MovingTimeInHours" Title="Moving Time (Hours)" />
-            <PropertyColumn Property="x => x.TotalElevationGainInKilometers" Title="Elevation Gain (KMs)" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceInKilometers)" Title="Distance (KMs)" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.ElapsedTimeInHours)" Title="Elapsed Time (Hours)" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.MovingTimeInHours)" Title="Moving Time (Hours)" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElevationGainInKilometers)" Title="Elevation Gain (KMs)" />
         </Columns>
     </MudDataGrid>
 }
