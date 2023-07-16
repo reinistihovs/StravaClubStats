@@ -25,6 +25,7 @@ else
             <PropertyColumn Property="x => x.AthleteFirstName" Title="First Name" />
             <PropertyColumn Property="x => x.AthleteLastName" Title="Last Name" />
             <PropertyColumn Property="x => x.TotalNumberOfRides" Title="Total Number of Rides" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalDistanceInKilometers)" Title="Distance (KMs)" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElapsedTimeInHours)" Title="Elapsed Time (Hours)" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalMovingTimeInHours)" Title="Moving Time (Hours)" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElevationGainInKilometers)" Title="Elevation Gain (KMs)" />
