@@ -27,7 +27,7 @@ namespace StravaClubStatsEngine.Service
 
         public async Task<List<Activity>> GetClubActivitiesAsync()
         {
-            var refreshAPIToken = await GetRefreshAPIToken();
+            var refreshAPIToken = await GetRefreshAPITokenAsync();
 
             var stravaClubActivitiesFromAPI = await GetStravaClubActivitiesFromAPIAsync(refreshAPIToken);
 
@@ -67,6 +67,7 @@ namespace StravaClubStatsEngine.Service
                             AthleteLastName = x.Key.AthleteLastName,
                             TotalNumberOfRides = x.Count(),
                             TotalDistanceInKilometers = x.Sum(x => x.DistanceInKilometers),
+                            LongestRideInKilometers = x.Max(x => x.DistanceInKilometers),
                             TotalMovingTimeInHours = x.Sum(x => x.MovingTimeInHours),
                             TotalElapsedTimeInHours = x.Sum(x => x.ElapsedTimeInHours),
                             TotalElevationGainInKilometers = x.Sum(x => x.TotalElevationGainInKilometers),
@@ -78,7 +79,7 @@ namespace StravaClubStatsEngine.Service
                         .ToList();
         }
 
-        private async Task<RefreshAPIToken> GetRefreshAPIToken()
+        private async Task<RefreshAPIToken> GetRefreshAPITokenAsync()
         {
             var response = await _httpAPIClient.PostAsync($"oauth/token?client_id={_stravaClubStatsEngineInput.ClientID}&client_secret={_stravaClubStatsEngineInput.ClientSecret}&grant_type=refresh_token&refresh_token={_stravaClubStatsEngineInput.RefreshToken}");
             return await response.Content.ReadFromJsonAsync<RefreshAPIToken>();

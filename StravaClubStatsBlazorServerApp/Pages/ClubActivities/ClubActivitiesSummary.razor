@@ -14,7 +14,7 @@ else if(isInvalidClubActivities)
 }
 else
 {
-    <MudDataGrid T="ActivitiesSummary" MultiSelection="true" Items="@clubActivitiesSummaries" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@quickFilter"
+    <MudDataGrid T="ActivitiesSummary" MultiSelection="true" Items="clubActivitiesSummaries" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="quickFilter"
              Hideable="true">
         <ToolBarContent>
             <MudSpacer />
@@ -25,14 +25,15 @@ else
             <PropertyColumn Property="x => x.AthleteFirstName" Title="First Name" />
             <PropertyColumn Property="x => x.AthleteLastName" Title="Last Name" />
             <PropertyColumn Property="x => x.TotalNumberOfRides" Title="Total Number of Rides" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalDistanceInKilometers)" Title="Distance (KMs)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElapsedTimeInHours)" Title="Elapsed Time (Hours)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalMovingTimeInHours)" Title="Moving Time (Hours)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElevationGainInKilometers)" Title="Elevation Gain (KMs)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistancePerRideInKilometers)" Title="Average Distance per Ride (KMs)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageElapsedTimeInHours)" Title="Average Elapsed Time per Ride (Hours)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageMovingTimeInHours)" Title="Average Moving Time per Ride (Hours)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageElevationGainInKilometers)" Title="Average Elevation Gain per Ride (KMs)" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalDistanceInKilometers)" Title="Distance (KMs)" SortBy="x => x.TotalDistanceInKilometers" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.LongestRideInKilometers)" Title="Longest Ride (KMs)" SortBy="x => x.LongestRideInKilometers" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElapsedTimeInHours)" Title="Elapsed Time (Hours)" SortBy="x => x.TotalElapsedTimeInHours" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalMovingTimeInHours)" Title="Moving Time (Hours)" SortBy="x => x.TotalMovingTimeInHours" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElevationGainInKilometers)" Title="Elevation Gain (KMs)" SortBy="x => x.TotalElevationGainInKilometers" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistancePerRideInKilometers)" Title="Average Distance per Ride (KMs)" SortBy="x => x.AverageDistancePerRideInKilometers" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageElapsedTimeInHours)" Title="Average Elapsed Time per Ride (Hours)" SortBy="x => x.AverageElapsedTimeInHours" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageMovingTimeInHours)" Title="Average Moving Time per Ride (Hours)" SortBy="x => x.AverageMovingTimeInHours" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageElevationGainInKilometers)" Title="Average Elevation Gain per Ride (KMs)" SortBy="x => x.AverageElevationGainInKilometers" />
         </Columns>
     </MudDataGrid>
 }

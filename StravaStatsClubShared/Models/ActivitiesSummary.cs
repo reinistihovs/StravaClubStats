@@ -6,6 +6,7 @@
         public string AthleteLastName { get; set; }
         public int TotalNumberOfRides { get; set; }
         public decimal TotalDistanceInKilometers { get; set; }
+        public decimal LongestRideInKilometers { get; set; }
         public decimal TotalMovingTimeInHours { get; set; }
         public decimal TotalElapsedTimeInHours { get; set; }
         public decimal TotalElevationGainInKilometers { get; set; }

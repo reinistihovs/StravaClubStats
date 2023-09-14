@@ -32,6 +32,9 @@ namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities
             if (filterColumn(x.TotalDistanceInKilometers.ToString()))
                 return true;
 
+            if (filterColumn(x.LongestRideInKilometers.ToString()))
+                return true;
+
             if (filterColumn(x.TotalElapsedTimeInHours.ToString()))
                 return true;
 
@@ -47,15 +50,21 @@ namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities
             if (filterColumn(x.AverageElapsedTimeInHours.ToString()))
                 return true;
 
+            if (filterColumn(x.AverageMovingTimeInHours.ToString()))
+                return true;
+
+            if (filterColumn(x.AverageElevationGainInKilometers.ToString()))
+                return true;
+
             return false;
         };
 
         protected override async Task OnInitializedAsync()
         {
-            await GetAllClubActivitiesSummaries();
+            await GetAllClubActivitiesSummariesAsync();
         }
 
-        private async Task GetAllClubActivitiesSummaries()
+        private async Task GetAllClubActivitiesSummariesAsync()
         {
             try
             {

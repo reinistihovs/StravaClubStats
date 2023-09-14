@@ -14,7 +14,7 @@ else if (isInvalidClubActivities)
 }
 else
 {
-    <MudDataGrid T="Activity" MultiSelection="true" Items="@clubActivities" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@quickFilter"
+    <MudDataGrid T="Activity" MultiSelection="true" Items="clubActivities" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="quickFilter"
         Hideable="true">
         <ToolBarContent>
             <MudSpacer />
@@ -26,10 +26,10 @@ else
             <PropertyColumn Property="x => x.AthleteLastName" Title="Last Name" />
             <PropertyColumn Property="x => x.ActivityName" Title="Activity Name" />
             <PropertyColumn Property="x => x.SportType" Title="Sport Type" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceInKilometers)" Title="Distance (KMs)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.ElapsedTimeInHours)" Title="Elapsed Time (Hours)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.MovingTimeInHours)" Title="Moving Time (Hours)" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElevationGainInKilometers)" Title="Elevation Gain (KMs)" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceInKilometers)" Title="Distance (KMs)" SortBy="x => x.DistanceInKilometers" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.ElapsedTimeInHours)" Title="Elapsed Time (Hours)" SortBy="x => x.ElapsedTimeInHours" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.MovingTimeInHours)" Title="Moving Time (Hours)" SortBy="x => x.MovingTimeInHours" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.TotalElevationGainInKilometers)" Title="Elevation Gain (KMs)" SortBy="x => x.TotalElevationGainInKilometers" />
         </Columns>
     </MudDataGrid>
 }
