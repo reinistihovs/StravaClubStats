@@ -1,6 +1,5 @@
-﻿namespace StravaClubStatsEngine
+﻿namespace StravaClubStatsEngine;
+
+public class StravaClubStatsEngineMediatREntryPoint
 {
-    public class StravaClubStatsEngineMediatREntryPoint
-    {
-    }
 }

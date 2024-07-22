@@ -3,4 +3,4 @@ using StravaClubStatsShared.Models;
 
 namespace StravaClubStatsEngine.Queries;
 
-public record GetClubActivitiesSummariesQuery() : IRequest<List<ActivitiesSummary>>;
+public record GetClubStatsForYearQuery() : IRequest<List<StravaClubStatsForYear>>;

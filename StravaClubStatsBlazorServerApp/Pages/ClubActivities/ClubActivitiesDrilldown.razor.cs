@@ -1,63 +1,62 @@
 ﻿using StravaClubStatsEngine.Queries;
 using StravaClubStatsShared.Models;
 
-namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities
+namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities;
+
+public partial class ClubActivitiesDrilldown
 {
-    public partial class ClubActivitiesDrilldown
+    private List<Activity> clubActivities = null;
+
+    private bool isInvalidClubActivities = false;
+
+    private string errorMessage { get; set; }
+
+    private string searchText;
+
+    private bool filterColumn(string columnName) =>
+                    columnName.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+
+    private string ConvertTo2DecimalPlaces(decimal decimalValue) => decimalValue.ToString("0.##");
+
+    private Func<Activity, bool> quickFilter => x =>
     {
-        private List<Activity> clubActivities = null;
+        if (string.IsNullOrWhiteSpace(searchText))
+            return true;
 
-        private bool isInvalidClubActivities = false;
+        if (filterColumn(x.ActivityName))
+            return true;
 
-        private string errorMessage { get; set; }
+        if (filterColumn($"{x.AthleteFirstName} {x.AthleteLastName}"))
+            return true;
 
-        private string searchText;
+        if(filterColumn(x.SportType))
+            return true;
 
-        private bool filterColumn(string columnName) =>
-                        columnName.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+        if (filterColumn(x.DistanceInKilometers.ToString()))
+            return true;
 
-        private string ConvertTo2DecimalPlaces(decimal decimalValue) => decimalValue.ToString("0.##");
+        if (filterColumn(x.ElapsedTimeInHours.ToString()))
+            return true;
 
-        private Func<Activity, bool> quickFilter => x =>
+        if (filterColumn(x.MovingTimeInHours.ToString()))
+            return true;
+
+        if (filterColumn(x.TotalElevationGainInKilometers.ToString()))
+            return true;
+
+        return false;
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
         {
-            if (string.IsNullOrWhiteSpace(searchText))
-                return true;
-
-            if (filterColumn(x.ActivityName))
-                return true;
-
-            if (filterColumn($"{x.AthleteFirstName} {x.AthleteLastName}"))
-                return true;
-
-            if(filterColumn(x.SportType))
-                return true;
-
-            if (filterColumn(x.DistanceInKilometers.ToString()))
-                return true;
-
-            if (filterColumn(x.ElapsedTimeInHours.ToString()))
-                return true;
-
-            if (filterColumn(x.MovingTimeInHours.ToString()))
-                return true;
-
-            if (filterColumn(x.TotalElevationGainInKilometers.ToString()))
-                return true;
-
-            return false;
-        };
-
-        protected override async Task OnInitializedAsync()
+            clubActivities = await Mediator.Send(new GetClubActivitiesQuery());
+        }
+        catch (Exception ex)
         {
-            try
-            {
-                clubActivities = await Mediator.Send(new GetClubActivitiesQuery());
-            }
-            catch (Exception ex)
-            {
-                isInvalidClubActivities = true;
-                errorMessage = $"Could not retrieve the club activities";
-            }
+            isInvalidClubActivities = true;
+            errorMessage = $"Could not retrieve the club activities";
         }
     }
 }

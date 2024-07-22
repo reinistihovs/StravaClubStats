@@ -3,6 +3,8 @@ using StravaClubStatsEngine;
 using StravaClubStatsEngine.Service;
 using StravaClubStatsEngine.Service.API;
 using StravaClubStatsEngine.Service.API.Interface;
+using StravaClubStatsEngine.Service.CosmosDb;
+using StravaClubStatsEngine.Service.CosmosDb.Interface;
 using StravaClubStatsEngine.Service.Interface;
 using StravaClubStatsShared.Models;
 
@@ -26,11 +28,17 @@ var stravaClubStatsEngineInput = new StravaClubStatsEngineInput()
     RefreshToken = builder.Configuration["RefreshToken"],
     ClubID = clubID,
     NumberOfPages = numberOfPages,
+    CosmosDbEndointUrl = builder.Configuration["CosmosDbEndpointUrl"],
+    CosmosDbPrimaryKey = builder.Configuration["CosmosDbPrimaryKey"],
+    CosmosDatabase = builder.Configuration["CosmosDatabase"],
+    CosmosPartitionKey = builder.Configuration["CosmosPartitionKey"],
 };
 
 builder.Services.AddSingleton(stravaClubStatsEngineInput);
 builder.Services.AddHttpClient<IHttpAPIClient, HttpAPIClient>();
 builder.Services.AddSingleton<IStravaClubStatsService, StravaClubStatsService>();
+builder.Services.AddSingleton<ICosmosDbConnection, CosmosDbConnection>();
+builder.Services.AddSingleton<IStravaClubStatsForYearService, StravaClubStatsForYearService>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StravaClubStatsEngineMediatREntryPoint).Assembly));
 
