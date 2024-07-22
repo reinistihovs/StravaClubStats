@@ -1,5 +1,4 @@
-﻿using MediatR;
-using StravaClubStatsEngine.Queries;
+﻿using StravaClubStatsEngine.Queries;
 using StravaClubStatsShared.Models;
 
 namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities;
@@ -56,6 +55,12 @@ public partial class ClubStatsForYear
 
         return false;
     };
+
+    private string GetAverageDoneColour(decimal avaregeDonePerWeek, decimal averageToDoPerWeek) =>
+    avaregeDonePerWeek <= averageToDoPerWeek ? "color:#FF0000" : "color:#000000";
+
+    private string GetAverageLeftToDoColour(decimal avaregeLeftToDoPerWeek, decimal averageToDoPerWeek) =>
+        avaregeLeftToDoPerWeek > averageToDoPerWeek ? "color:#FF0000" : "color:#000000";
 
     protected override async Task OnInitializedAsync()
     {
