@@ -30,8 +30,8 @@ else
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceTarget)" Title="Distance Target (KMs)" SortBy="x => x.DistanceTarget" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.DistanceLeftToDo)" Title="Distance Left to Do (KMs)" SortBy="x => x.DistanceLeftToDo" />
             <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceToDoPerWeek)" Title="Average Distance To Do Per Week (KMs)" SortBy="x => x.AverageDistanceToDoPerWeek" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceDonePerWeek)" Title="Average Distance Done Per Week (KMs)" SortBy="x => x.AverageDistanceDonePerWeek" />
-            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceLeftToDoPerWeek)" Title="Average Distance Left To Do Per Week (KMs)" SortBy="x => x.AverageDistanceLeftToDoPerWeek" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceDonePerWeek)" CellStyleFunc="x => GetAverageDoneColour(x.AverageDistanceDonePerWeek, x.AverageDistanceToDoPerWeek)" Title="Average Distance Done Per Week (KMs)" SortBy="x => x.AverageDistanceDonePerWeek" />
+            <PropertyColumn Property="x => ConvertTo2DecimalPlaces(x.AverageDistanceLeftToDoPerWeek)" CellStyleFunc="x => GetAverageLeftToDoColour(x.AverageDistanceLeftToDoPerWeek, x.AverageDistanceToDoPerWeek)" Title="Average Distance Left To Do Per Week (KMs)" SortBy="x => x.AverageDistanceLeftToDoPerWeek" />
         </Columns>
     </MudDataGrid>
 }
