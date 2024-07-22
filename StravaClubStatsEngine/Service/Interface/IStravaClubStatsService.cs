@@ -1,10 +1,9 @@
 ﻿using StravaClubStatsShared.Models;
 
-namespace StravaClubStatsEngine.Service.Interface
+namespace StravaClubStatsEngine.Service.Interface;
+
+public interface IStravaClubStatsService
 {
-    public interface IStravaClubStatsService
-    {
-        Task<List<ActivitiesSummary>> GetClubActivitiesSummariesAsync();
-        Task<List<Activity>> GetClubActivitiesAsync();
-    }
+    Task<List<ActivitiesSummary>> GetClubActivitiesSummariesAsync();
+    Task<List<Activity>> GetClubActivitiesAsync();
 }

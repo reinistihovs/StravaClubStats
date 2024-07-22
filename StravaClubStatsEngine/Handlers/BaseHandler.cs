@@ -1,8 +1,7 @@
-﻿namespace StravaClubStatsEngine.Handlers
+﻿namespace StravaClubStatsEngine.Handlers;
+
+public class BaseHandler
 {
-    public class BaseHandler
-    {
-        protected string GetStringForCompare(string compareFrom, string compareTo) =>
-          !string.IsNullOrEmpty(compareFrom) ? compareFrom.ToLower() : compareTo.ToLower();
-    }
+    protected string GetStringForCompare(string compareFrom, string compareTo) =>
+      !string.IsNullOrEmpty(compareFrom) ? compareFrom.ToLower() : compareTo.ToLower();
 }
