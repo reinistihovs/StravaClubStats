@@ -2,6 +2,7 @@
 
 This is a simple strava club stats Blazor Server app which displays information about a given club.  It displays information consisting of:
 
+* Club Stats for Year
 * Club Activities Summary
 * Club Activities Drilldown
 
