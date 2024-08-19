@@ -1,7 +1,7 @@
 ﻿using StravaClubStatsEngine.Queries;
 using StravaClubStatsShared.Models;
 
-namespace StravaClubStatsBlazorServerApp.Pages.ClubActivities;
+namespace StravaClubStatsBlazorServerApp.Components;
 
 public partial class ClubStatsForYear
 {
