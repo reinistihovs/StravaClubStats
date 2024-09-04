@@ -5,52 +5,56 @@ namespace StravaClubStatsBlazorServerApp.Components;
 
 public partial class ClubStatsForYear
 {
-    private List<StravaClubStatsForYear> clubStatsForYear = new List<StravaClubStatsForYear>();
+    private List<StravaClubStatsForYear> ClubStatsForYears = new List<StravaClubStatsForYear>();
 
-    private bool isInvalidClubStatsForYear = false;
+    private List<string> Cyclists = new List<string>();
 
-    private string errorMessage { get; set; } = string.Empty;
+    private bool IsInvalidClubStatsForYear = false;
 
-    private string searchText = string.Empty;
+    private string ErrorMessage { get; set; } = string.Empty;
 
-    private bool filterColumn(string columnName) =>
-                            columnName.Contains(searchText, StringComparison.OrdinalIgnoreCase);
+    private string SearchText = string.Empty;
+
+    private bool FilterColumn(string columnName) =>
+                            columnName.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
 
     private string ConvertTo2DecimalPlaces(decimal decimalValue) => decimalValue.ToString("0.##");
 
+    private bool IsSmall = false;
+
     private Func<StravaClubStatsForYear, bool> quickFilter => x =>
     {
-        if (string.IsNullOrWhiteSpace(searchText))
+        if (string.IsNullOrWhiteSpace(SearchText))
             return true;
 
-        if (filterColumn(x.Cyclist))
+        if (FilterColumn(x.Cyclist))
             return true;
 
-        if (filterColumn(x.Rides.ToString()))
+        if (FilterColumn(x.Rides.ToString()))
             return true;
 
-        if (filterColumn(x.Time))
+        if (FilterColumn(x.Time))
             return true;
 
-        if (filterColumn(x.Distance.ToString()))
+        if (FilterColumn(x.Distance.ToString()))
             return true;
 
-        if (filterColumn(x.ElevationGain.ToString()))
+        if (FilterColumn(x.ElevationGain.ToString()))
             return true;
 
-        if (filterColumn(x.DistanceTarget.ToString()))
+        if (FilterColumn(x.DistanceTarget.ToString()))
             return true;
 
-        if (filterColumn(x.DistanceLeftToDo.ToString()))
+        if (FilterColumn(x.DistanceLeftToDo.ToString()))
             return true;
 
-        if (filterColumn(x.AverageDistanceToDoPerWeek.ToString()))
+        if (FilterColumn(x.AverageDistanceToDoPerWeek.ToString()))
             return true;
 
-        if (filterColumn(x.AverageDistanceDonePerWeek.ToString()))
+        if (FilterColumn(x.AverageDistanceDonePerWeek.ToString()))
             return true;
 
-        if (filterColumn(x.AverageDistanceLeftToDoPerWeek.ToString()))
+        if (FilterColumn(x.AverageDistanceLeftToDoPerWeek.ToString()))
             return true;
 
         return false;
@@ -69,17 +73,28 @@ public partial class ClubStatsForYear
     {
         await GetStravaClubStatsForYearAsync();
     }
-
     private async Task GetStravaClubStatsForYearAsync()
     {
         try
         {
-            clubStatsForYear = await Mediator.Send(new GetClubStatsForYearQuery());
+            ClubStatsForYears = await Mediator.Send(new GetClubStatsForYearQuery());
+
+            Cyclists = ClubStatsForYears
+                        .GroupBy(clubStatsForYear => clubStatsForYear.Cyclist)
+                        .Select(cyclist => cyclist.Key)
+                        .ToList();
+
+            if (IsSmall && 
+                string.IsNullOrEmpty(SearchText) && 
+                Cyclists.Any())
+            {
+                SearchText = Cyclists.First();
+            }
         }
         catch (Exception ex)
         {
-            isInvalidClubStatsForYear = true;
-            errorMessage = $"Could not retrieve the club stats for the year - {ex.Message}";
+            IsInvalidClubStatsForYear = true;
+            ErrorMessage = $"Could not retrieve the club stats for the year - {ex.Message}";
         }
     }
 }

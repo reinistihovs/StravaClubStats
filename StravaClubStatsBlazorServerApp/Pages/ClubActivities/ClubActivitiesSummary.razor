@@ -4,22 +4,31 @@
 
 <h1>Club Activities Summary</h1>
 
-@if (!clubActivitiesSummaries.Any()  && !isInvalidClubActivities)
+@if (!ClubActivitiesSummaries.Any()  && !IsInvalidClubActivities)
 {
     <p><em>Loading...</em></p>
 }
-else if(isInvalidClubActivities)
+else if(IsInvalidClubActivities)
 {
-    <ErrorMessage Error="@errorMessage" />
+    <ErrorMessage Error="@ErrorMessage" />
 }
 else
 {
-    <MudDataGrid T="ActivitiesSummary" MultiSelection="true" Items="clubActivitiesSummaries" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="quickFilter"
+    <MudDataGrid T="ActivitiesSummary" MultiSelection="true" Items="ClubActivitiesSummaries" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="quickFilter"
              Hideable="true">
         <ToolBarContent>
             <MudSpacer />
-            <MudTextField @bind-Value="searchText" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
-                      AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+
+            @if (IsSmall)
+            {
+                <CyclistDropdown Cyclists="Cyclists"
+                                 @bind-Cyclist="SearchText" />
+            }
+            else
+            {
+                <CyclistTextBox @bind-Cyclist="SearchText" />
+            }
+
         </ToolBarContent>
         <Columns>
             <PropertyColumn Property="x => x.AthleteFirstName" Title="First Name" />
@@ -37,3 +46,5 @@ else
         </Columns>
     </MudDataGrid>
 }
+
+<MediaQuery Media="@BlazorPro.BlazorSize.Breakpoints.SmallDown" @bind-Matches="IsSmall" />
