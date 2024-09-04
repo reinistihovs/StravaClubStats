@@ -1,3 +1,4 @@
+using BlazorPro.BlazorSize;
 using MudBlazor.Services;
 using StravaClubStatsEngine;
 using StravaClubStatsEngine.Service;
@@ -13,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddMediaQueryService();
 
 Int32.TryParse(builder.Configuration["ClientID"], out int clientID);
 
