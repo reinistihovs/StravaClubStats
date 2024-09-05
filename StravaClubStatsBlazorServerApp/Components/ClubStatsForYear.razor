@@ -17,15 +17,9 @@ else
         <ToolBarContent>
             <MudSpacer />
 
-            @if (IsSmall)
-            {
-                <CyclistDropdown Cyclists="Cyclists"
-                                 @bind-Cyclist="SearchText" />
-            }
-            else
-            {
-                <CyclistTextBox @bind-Cyclist="SearchText" />
-            }
+            <FilterComponents @bind-Cyclist="@SearchText"
+                              Cyclists="Cyclists"
+                              IsSmall="IsSmall" />
 
         </ToolBarContent>
         <Columns>
