@@ -15,8 +15,6 @@ public partial class ClubActivitiesDrilldown
 
     private string SearchText = string.Empty;
 
-    private bool IsSmall = false;
-
     private bool FilterColumn(string columnName) =>
                     columnName.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
 
@@ -56,19 +54,6 @@ public partial class ClubActivitiesDrilldown
         try
         {
             ClubActivities = await Mediator.Send(new GetClubActivitiesQuery());
-
-            Cyclists = ClubActivities
-                       .GroupBy(clubActivity => clubActivity.AthleteFirstName)
-                       .Select(cyclist => cyclist.Key)
-                       .OrderBy(cyclist => cyclist)
-                       .ToList();
-
-            if (IsSmall &&
-                string.IsNullOrEmpty(SearchText) &&
-                Cyclists.Any())
-            {
-                SearchText = Cyclists.First();
-            }
         }
         catch (Exception ex)
         {

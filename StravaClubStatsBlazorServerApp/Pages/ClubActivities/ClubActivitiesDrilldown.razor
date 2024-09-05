@@ -19,15 +19,7 @@ else
         <ToolBarContent>
             <MudSpacer />
 
-            @if (IsSmall)
-            {
-                <CyclistDropdown Cyclists="Cyclists"
-                                 @bind-Cyclist="SearchText" />
-            }
-            else
-            {
-                <CyclistTextBox @bind-Cyclist="SearchText" />
-            }
+            <CyclistTextBox @bind-Cyclist="SearchText" />
         </ToolBarContent>
         <Columns>
             <PropertyColumn Property="x => x.AthleteFirstName" Title="First Name" />
@@ -41,5 +33,3 @@ else
         </Columns>
     </MudDataGrid>
 }
-
-<MediaQuery Media="@BlazorPro.BlazorSize.Breakpoints.SmallDown" @bind-Matches="IsSmall" />
