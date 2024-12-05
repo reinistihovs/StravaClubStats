@@ -22,6 +22,12 @@ public partial class ClubStatsForYear
 
     private bool IsSmall = false;
 
+    private const string Red = "color:#FF0000";
+
+    private const string Green = "color:#008000";
+
+    private const string Black = "color:#000000";
+
     private Func<StravaClubStatsForYear, bool> quickFilter => x =>
     {
         if (string.IsNullOrWhiteSpace(SearchText))
@@ -61,13 +67,28 @@ public partial class ClubStatsForYear
     };
 
     private string GetDistanceDoneColour(decimal distance, decimal distanceTargetForCurrentWeek) =>
-        distance < distanceTargetForCurrentWeek ? "color:#FF0000" : "color:#000000";
+        distance < distanceTargetForCurrentWeek ? Red : Black;
+
+    private string GetDoneColour(decimal distance, decimal distanceTargetForYear, decimal distanceTargetForCurrentWeek)
+    {
+        if (distance >= distanceTargetForYear)
+        {
+            return Green;
+        }
+
+        if (distance < distanceTargetForCurrentWeek)
+        {
+            return Red;
+        }
+
+        return Black;
+    }
 
     private string GetAverageDoneColour(decimal avaregeDonePerWeek, decimal averageToDoPerWeek) =>
-        avaregeDonePerWeek < averageToDoPerWeek ? "color:#FF0000" : "color:#000000";
+        avaregeDonePerWeek < averageToDoPerWeek ? Red : Black;
 
     private string GetAverageLeftToDoColour(decimal avaregeLeftToDoPerWeek, decimal averageToDoPerWeek) =>
-        avaregeLeftToDoPerWeek > averageToDoPerWeek ? "color:#FF0000" : "color:#000000";
+        avaregeLeftToDoPerWeek > averageToDoPerWeek ? Red : Black;
 
     protected override async Task OnInitializedAsync()
     {
