@@ -1,0 +1,11 @@
+﻿<div class="error-message-div">
+    @if (!string.IsNullOrEmpty(Error))
+    {
+        <p><em>@Error</em></p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Error { get; set; } = string.Empty;
+}

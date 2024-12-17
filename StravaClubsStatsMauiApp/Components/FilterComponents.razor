@@ -1,0 +1,11 @@
+﻿@if (IsSmall)
+{
+    <CyclistDropdown Cyclists="Cyclists"
+                     Cyclist="@Cyclist"
+                     CyclistChanged="CyclistChanged"/>
+}
+else
+{
+    <CyclistTextBox Cyclist="@Cyclist"
+                    CyclistChanged="CyclistChanged" />
+}
