@@ -20,7 +20,7 @@ public partial class ClubStatsForYear
 
     private string ConvertTo2DecimalPlaces(decimal decimalValue) => decimalValue.ToString("0.##");
 
-    private bool IsSmall = false;
+    private bool IsSmall => DeviceInfo.Current.Idiom == DeviceIdiom.Phone;
 
     private const string Red = "color:#FF0000";
 
