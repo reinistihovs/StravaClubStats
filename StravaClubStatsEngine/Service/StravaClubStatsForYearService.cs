@@ -43,10 +43,12 @@ public class StravaClubStatsForYearService : IStravaClubStatsForYearService
 
         int weeksLeftInYear = NumberOfWeeksInYear - currentWeekNumber;
 
+        int weeksLeft = weeksLeftInYear > 0 ? weeksLeftInYear : 1;  
+
         record.DistanceLeftToDo = record.DistanceTarget - record.Distance;
         record.AverageDistanceToDoPerWeek = record.DistanceTarget / NumberOfWeeksInYear;
         record.AverageDistanceDonePerWeek = record.Distance / currentWeekNumber;
-        record.AverageDistanceLeftToDoPerWeek = record.DistanceLeftToDo / weeksLeftInYear;
+        record.AverageDistanceLeftToDoPerWeek = record.DistanceLeftToDo / weeksLeft;
         record.DistanceTargetForCurrentWeek = record.AverageDistanceToDoPerWeek * currentWeekNumber;
     }
 
